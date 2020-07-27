@@ -1,0 +1,137 @@
+This is the problem statement
+
+An Indian farmer has a piece of farmland, say L square kilometers long, and wants to either sow wheat or rice or a combination of both. The farmer has a limited amount of F kg of fertilizer and P kg of insecticides.
+
+Every square kilometre of wheat requires F1 Kg of fertilizer and P1 Kg of insecticide. Every square kilometre of rice farming requires F2 Kg of fertilizer and P2 Kg of insecticide. Let S1 be the price obtained by selling wheat harvested from a square kilometre and S2 be the price obtained by selling rice harvested from a square kilometre.
+
+You have to find the maximum total profit that the farmer can earn by selecting the area in which wheat and/or rice should be farmed.
+
+For example:
+
+L = 10 Km2 , F = 10 Kg, P = 5 Kg, F1 = 2 Kg, P1 = 2 Kg, F2 = 3 Kg, P2 = 1 Kg, S1 = 14 , S2 = 25.
+
+In this case, the farmer will earn a maximum profit if he sows only Rice on 3.33 Km2 area and maximum profit value will be 83.33.
+
+Input Format
+
+The only of input will consist of 9 integers space-separated, L, F, P, F1, P1, F2, P2, S1, S2
+
+Constraints
+
+1 <= L <= 10^4
+1 <= F <= 10^4
+1 <= P <= 10^4
+F1 + F2< = F
+P1 + P2 <= P
+1 <= S1 <= 10^4
+1 <= S2 <= 10^4
+Output Format
+
+Output will be
+
+Maximum profit correct up-to 2 digits
+value in km 2 where wheat should be planted correct up-to 2 digits
+value in km 2 where rice should be planted correct up-to 2 digits.
+For the example considered in the question output will be 83.33 0.00 3.33 .
+
+Sample Test Case
+
+Input
+
+10 10 5 2 2 3 1 14 25
+Output
+
+83.33 0.00 3.33
+Explanation
+
+let us say that L = 10 Km2 , F = 10 Kg, P = 5 Kg, F1 = 2 Kg, P1 = 2 Kg, F2 = 3 Kg, P2 = 1 Kg, S1 = 14 , S2 = 25 . Total profit will be maximum if farmer does not plant any wheat but plants rice on 3.33 km2 area and maximum profit value is 83.33 .
+
+enter image description here
+
+I require a solution to this problem. However, unable to grasp the statement itself. Please help me.
+
+
+
+
+Ans>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+package com.textexp;
+import java.text.DecimalFormat;
+import java.util.Scanner;
+
+public class FarmerProfitTest{
+    public static void main(String[] args){
+    System.out.println(total_profite());
+    }
+
+public static String total_profite(){
+    Scanner in=new Scanner(System.in);
+    float L=in.nextInt();
+    float F=in.nextInt();
+    float P=in.nextInt();
+    float F1=in.nextInt();
+    float P1=in.nextInt();
+    float F2=in.nextInt();
+    float P2=in.nextInt();
+    float S1=in.nextInt();
+    float S2=in.nextInt();
+
+    //result variable
+
+    float total_rice_insect_used=0f;
+    float total_rice_fertilizer_used=0f;
+    float total_wheat_insect_used=0f;
+    float total_wheat_fertilizer_used=0f;
+    float area_of_wheat=0.00f;
+    float area_of_rice=0.00f;
+    float amount =0.00f;
+
+    while(true){
+        if((L==area_of_rice+area_of_wheat) || (P==total_rice_insect_used+total_wheat_insect_used) || (F==total_rice_fertilizer_used+total_wheat_fertilizer_used) ||P2==0 ||P1==0 ||F1==0 ||F2==0){
+         break;
+    }
+    float cal_of_rice_profit=Math.min(F/F2,P/P2)*S2;
+    float cal_of_wheat_profit=Math.min(F/F1,P/P1)*S1;
+
+    if(cal_of_rice_profit>cal_of_wheat_profit){
+        float area_of_insect_used=P/P2;
+        float area_of_fertilizer_used=F/F2;
+        if(area_of_insect_used > area_of_fertilizer_used){
+            L=L-area_of_fertilizer_used;
+            F2=0;
+            total_rice_fertilizer_used=total_rice_fertilizer_used+F2;
+            area_of_rice=area_of_rice+area_of_fertilizer_used;
+            amount=amount+area_of_fertilizer_used*S2;
+        }else if(area_of_insect_used < area_of_fertilizer_used){
+          L=L-area_of_insect_used;
+          P2=0;
+          total_rice_insect_used=total_rice_insect_used+area_of_insect_used;
+          area_of_rice=area_of_rice+area_of_insect_used;
+          amount=amount+area_of_insect_used*S2;
+        }
+    }else{
+        float area_insect_used=P/P1;
+        float area_fertilizer_used=F/F1;
+
+        if(area_insect_used>area_fertilizer_used){
+            L=L-area_fertilizer_used;
+            F1=0;
+            total_wheat_fertilizer_used=total_wheat_fertilizer_used+F1;
+           area_of_wheat=area_of_wheat + area_fertilizer_used;
+            amount=amount+area_fertilizer_used*S1;
+    }else if(area_insect_used<area_fertilizer_used){
+        L=L-area_insect_used;
+        P1=0;
+        total_wheat_insect_used=total_wheat_insect_used+area_insect_used;
+        area_of_wheat=area_of_wheat+area_insect_used;
+        amount=amount+area_insect_used*S1;
+    }
+ }
+}
+  DecimalFormat df=new DecimalFormat();
+  df.setMaximumFractionDigits(2);
+  df.setMinimumFractionDigits(2);
+  return df.format(amount)+","+df.format(area_of_wheat) +","+df.format(area_of_rice);
+ }
+}
+
